@@ -1,0 +1,69 @@
+<form [formGroup]="resourceGroupForm">
+  <div class="container">
+
+    <div class="row" ngbRadioGroup name="radioBasic" formControlName="resource">
+      <div class="col"
+           app-card
+           name="Books"
+           value="books"
+      >
+      </div>
+
+      <div class="col"
+           app-card
+           name="Houses"
+           value="houses"
+      >
+      </div>
+
+      <div class="col"
+           app-card
+           name="Characters"
+           value="characters"
+      >
+      </div>
+
+    </div>
+  </div>
+</form>
+
+<div class="container mt-4">
+    <ngb-accordion #acc="ngbAccordion">
+      <ngb-panel id="toggle-1" title="Filters" *ngIf="actualShownResourceElements == 'books'">
+        <ng-template ngbPanelContent>
+          Implement filters for books here
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="toggle-1" title="Filters" *ngIf="actualShownResourceElements == 'houses'">
+        <ng-template ngbPanelContent>
+          Implement filters for houses here
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="toggle-1" title="Filters" *ngIf="actualShownResourceElements == 'characters'">
+        <ng-template ngbPanelContent>
+          Implement filters for characters here
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+
+    <div class="col-4" *ngFor="let resource of resourcesToShowForActualPagination"
+         app-resource-card
+         [name]="getNameBasedOnResource(resource)"
+         (click)="showResource(this.resourceGroupForm.get('resource').value, getResourceIdFromUrl(resource.url))">
+    </div>
+  </div>
+</div>
+
+<ngb-pagination class="d-flex justify-content-center mt-4"
+                [collectionSize]="actualCollectionSize"
+                [(page)]="actualPage"
+                [maxSize]="5"
+                [boundaryLinks]="true"
+                (pageChange)="onPageChanges()"
+>
+
+</ngb-pagination>
